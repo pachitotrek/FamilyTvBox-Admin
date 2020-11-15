@@ -1,0 +1,142 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+      <form class="text-center border border-light p-5 mt-2" [formGroup]="contenido" (ngSubmit)="agregarContenido()"
+        ngNativeValidate>
+        <h5 class="h4 mb-4">Agregue un Banner o un Video para publicidad </h5>
+        <div class="md-form">
+          <input mdbInput type="text" class="form-control" formControlName="name" name="name" required>
+          <label for="form1" class="">Nombre de la publicidad</label>
+        </div>
+        <label>Tipo de Publicidad</label>
+        <select class="browser-default custom-select mb-4" formControlName="tipo" name="tipo" required>
+          <option value="1">Banner</option>
+          <option value="2">Video</option>
+        </select>
+        <label>Estado de la Publicidad</label>
+        <select class="browser-default custom-select mb-4" formControlName="state" name="tipo" required>
+          <option value="0">Inactiva</option>
+          <option value="1">Activa</option>
+        </select>
+        <label>Publico a quien va dirigida la Publicidad</label>
+        <select class="browser-default custom-select mb-4" formControlName="publico" name="publico" required>
+          <option value="1">Todos</option>
+          <option value="0">Radio</option>
+          <option value="2">Television</option>
+        </select>
+        <div class="form-group mb-5">
+          <label for="exampleFormControlFile1">Agregue la Imagen del Contenido</label>
+          <img *ngIf="ImagenTemp" [src]="ImagenTemp" class="w-50" alt="">
+          <img *ngIf="imgTemp" [src]="imgTemp | imagen:'publicidad'" class="w-50" alt="">
+
+
+          <input type="file" class="form-control-file" (change)="seleccionImagen($event.target.files[0])" required>
+        </div>
+
+        <button mdbBtn type="submit" color="success" size="sm" mdbWavesEffect>agregar</button>
+        <button mdbBtn type="button" color="info" size="sm" (click)="actualizar()" mdbWavesEffect>actualizar</button>
+
+      </form>
+
+
+    </div>
+    <div class="col-sm-8">
+
+      <table mdbTable>
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Publico</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">editar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let item of items">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.name}}</td>
+            <td *ngIf="item.tipo==1">Banner</td>
+            <td *ngIf="item.tipo==2">Video</td>
+            <td *ngIf="item.state==1">Activa</td>
+            <td *ngIf="item.state==0">Inactiva</td>
+            <td *ngIf="item.publico <= 1">Radio</td>
+            <td *ngIf="item.publico > 1">Tv</td>
+            <td>
+              <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="basicModal.show()"
+                mdbWavesEffect>Ver</button>
+
+              <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title w-100" id="myModalLabel">{{item.name}} - imagen </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="text-center">
+                        <ng-container *ngIf="item.tipo==1; else elseTemplate">
+                          <img [src]="item.archivo | imagen:'publicidad'" width="400px" alt="">
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          <video preload="auto" controls class="img-fluid">
+                            <source [src]="item.archivo | imagen:'publicidad'" type="video/mp4">
+                          </video>
+
+
+
+                        </ng-template>
+
+
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                        (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <button mdbBtn type="button" color="info" outline="true" size="sm" (click)="editar(item)"
+                mdbWavesEffect>Editar</button>
+            </td>
+            <td>
+              <button mdbBtn type="button" color="danger" outline="true" size="sm" (click)="eliminarIdioma(item.id)"
+                mdbWavesEffect>Borrar</button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+<div mdbModal #modalupload="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-info modal-notify" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Subiendo Imagen</h4>
+      </div>
+      <div class="modal-body text-center">
+        <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

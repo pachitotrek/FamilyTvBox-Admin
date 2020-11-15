@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="mt-3">
+        <form [formGroup]="form" (ngSubmit)="AgregarCupon()">
+          <div class="form-group">
+            <label for="">Reset Formulario</label>
+            <button type="button" mdbBtn color="light" size="sm" (click)="reset()" mdbWavesEffect>Reset formulario</button>
+
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Cupón</label>
+            <input type="text" class="form-control" formControlName="cupon" aria-describedby="Cupon" placeholder="ingrese un nuevo cupon">
+            <small id="emailHelp" class="form-text text-muted">Agregue un nuevo cupón</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Descuento en decimales</label>
+            <input type="number" class="form-control" formControlName="descuento"  placeholder="Ejemplo 0.1 equivalente al 10%">
+            <small id="emailHelp" class="form-text text-muted">Agregue un descuento en decimales ejemplo si es del 10% seria 0.1</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Estado del cupon</label>
+            <select class="form-control" formControlName="estado"  id="exampleFormControlSelect1">
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
+            </select>
+            <small id="emailHelp" class="form-text text-muted">Agregue un nuevo cupón</small>
+          </div>
+
+          <button type="submit" *ngIf="!update" [disabled]="!form.valid" mdbBtn color="success" mdbWavesEffect>Agregar Cupon</button>
+          <button type="button" *ngIf="update" [disabled]="!form.valid" (click)="editarCupon()" mdbBtn color="primary" mdbWavesEffect>Editar Cupon</button>
+
+        </form>
+
+      </div>
+    </div>
+    <div class="col-sm-6">
+        <table mdbTable>
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th>Cupón</th>
+                <th>Descuento</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol *ngFor="let c of cupones">
+                <th scope="row">{{c.id}}</th>
+                <td>{{c.cupon}}</td>
+                <td>{{c.descuento}}</td>
+                <td *ngIf="c.estado==1">Activo</td>
+                <td *ngIf="c.estado==0">Inactivo</td>
+                <td> <button type="button" mdbBtn size="sm" color="primary" (click)="set(c)" mdbWavesEffect>Editar</button></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
+</div>

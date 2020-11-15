@@ -1,0 +1,221 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+      
+      <form class="text-center border border-light p-5 mt-2" [formGroup]="contenido" (ngSubmit)="agregarContenido()"
+        ngNativeValidate>
+        <h5 class="h4 mb-4">Agregue una nueva emisora o canal de televisión</h5>
+        <div class="md-form">
+          <input mdbInput type="text" class="form-control" formControlName="name" name="name" required>
+          <label for="form1" class="">Nombre del Emisora o Canal </label>
+        </div>
+        <div class="md-form">
+          <input mdbInput type="text" id="form1" class="form-control" formControlName="url" name="url" required>
+          <label for="form1" class="">Direccion del Recurso</label>
+        </div>
+        <label>Tipo de Contenido</label>
+        <select class="browser-default custom-select mb-4" formControlName="tipo" name="tipo" required>
+          <option value="1">Emisora</option>
+          <option value="2">Canal de Television</option>
+        </select>
+        <label>Idioma</label>
+        <select class="browser-default custom-select mb-4" formControlName="idioma" name="idioma" required>
+          <option value="0">Todos</option>
+          <option *ngFor="let b of idiomas" value="{{b.id}}">{{b.idioma}}</option>
+        </select>
+        <label>Genero</label>
+        <select class="browser-default custom-select mb-4" formControlName="genero" name="genero" required>
+          <option value="0">Todos</option>
+          <option *ngFor="let b of generos" value="{{b.id}}">{{b.genero}}</option>
+        </select>
+        <div class="form-group mb-5">
+            <img *ngIf="ImagenTemp" [src]="ImagenTemp" class="w-50" alt="">
+          <img *ngIf="imgTemp" [src]="imgTemp | imagen:'contenido'" class="w-50" alt="">
+          <label for="exampleFormControlFile1">Agregue la Imagen del Contenido</label>
+          
+          <input type="file" formControlName="imagen" class="form-control-file" (change)="seleccionImagen($event.target.files[0])" required>
+        </div>
+        <button mdbBtn type="submit" color="success" size="lg" mdbWavesEffect>Agregar</button>
+        <button mdbBtn type="button" color="info" size="lg" (click)="actualizar()"
+          mdbWavesEffect>Actualizar</button>
+
+
+      </form>
+
+
+    </div>
+    <div class="col-sm-4">
+
+      <form class="text-center border border-light p-5 mt-2 mb-4" [formGroup]="idioma" (ngSubmit)="agregarIdioma()"
+        ngNativeValidate>
+        <h5 class="h4 mb-4">Agregue un Idioma </h5>
+        <div class="md-form">
+          <input mdbInput type="text" class="form-control" formControlName="idioma" name="idioma" required>
+          <label for="form1" class="">Nombre del Idioma</label>
+        </div>
+        <button mdbBtn type="submit" color="success" size="sm" mdbWavesEffect>Agregar</button>      
+        <button mdbBtn type="button" color="info" size="sm" (click)="Idiomas()" mdbWavesEffect>Actualizar</button>
+      </form>
+
+      
+      <form class="text-center border border-light p-5 mt-2 mb-4" [formGroup]="genero" (ngSubmit)="agregarGenero()"
+        ngNativeValidate>
+        <h5 class="h4 mb-4">Agregue un Genero</h5>
+        <div class="md-form">
+          <input mdbInput type="text" class="form-control" formControlName="genero" name="genero" required>
+          <label for="form1" class="">Nombre del Genero</label>
+        </div>
+        <button mdbBtn type="submit" color="success" size="sm" mdbWavesEffect>Agregar</button>      
+        <button mdbBtn type="button" color="info" size="sm" (click)="GenerosA()" mdbWavesEffect>Actualizar</button>
+      </form>
+
+
+
+
+    </div>
+    <div class="col-sm-4">
+      <div class="mt-3">
+        <h3 class="h3">Lista de Idiomas</h3>
+      </div>
+
+      <table mdbTable striped="true">
+        <thead>
+          <tr>
+            <th scope="col">id </th>
+            <th scope="col">Nombre </th>
+            <th scope="col">editar </th>
+            <th scope="col">eliminar </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let a of idiomas">
+            <th scope="row">{{a.id}}</th>
+            <td>{{a.idioma}}</td>
+            <td><button mdbBtn type="button" color="info" outline="true" size="sm" mdbWavesEffect (click)="editarIdiomas(a)">Editar</button></td>
+            <td><button mdbBtn type="button" color="danger" outline="true" size="sm" (click)="eliminarIdioma(a.id)" mdbWavesEffect>Borrar</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-3">
+        <h3 class="h3">Lista de Generos</h3>
+      </div>
+
+      <table mdbTable striped="true">
+        <thead>
+          <tr>
+            <th scope="col">id </th>
+            <th scope="col">Nombre </th>
+            <th scope="col">editar </th>
+            <th scope="col">eliminar </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let b of generos">
+            <th scope="row">{{b.id}}</th>
+            <td>{{b.genero}}</td>
+            <td><button mdbBtn type="button" color="info" outline="true" size="sm" mdbWavesEffect (click)="editarGeneross(b)">Editar</button></td>
+            <td><button mdbBtn type="button" color="danger" outline="true" size="sm" (click)="eliminarGenero(b.id)" mdbWavesEffect>Borrar</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <div class="row m-0 p-0">
+    <div class="col">
+      <div class="text-center">
+        <h3 class="h3">Contenido Actual disponible Canal de television o Emisora de Radio</h3>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="text-center">
+        <table mdbTable striped="true">
+          <thead class="black white-text">
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Nombre</th>             
+              <th scope="col">Tipo</th>
+              <th scope="col">Idioma</th>
+              <th scope="col">Genero</th>
+              <th scope="col">Imagen</th>
+              <th scope="col">Dirección Url</th>
+              <th scope="col">editar</th>
+              <th scope="col">Eliminar</th>              
+            </tr>
+          </thead>
+          <tbody>
+            <tr mdbTableCol *ngFor="let item of items">
+              <th scope="row">{{item.id}}</th>
+              <td>{{item.name}}</td>              
+              <td>{{item.tipo}}</td>
+              <td>{{item.idioma}}</td>
+              <td>{{item.genero}}</td>
+              <td>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="basicModal.show()"
+                  mdbWavesEffect>Ver</button>
+
+                <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+                  aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title w-100" id="myModalLabel">{{item.name}} - imagen </h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="text-center">
+                          <img [src]="item.imagen | imagen:'contenido'" height="200" alt="">
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                          (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td style="font-size: 15px;max-width: 200px;word-wrap: break-word;">{{item.url}}</td>
+              <td>
+                <button mdbBtn type="button" color="info" outline="true" size="sm" (click)="editarContenido(item)"
+                  mdbWavesEffect>Editar</button>
+              </td>
+              <td>
+                <button mdbBtn type="button" color="danger" outline="true" size="sm" (click)="eliminarContenido(item.id)" mdbWavesEffect>Borrar</button>
+              </td>
+             
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+</div>
+
+
+<div mdbModal #modalupload="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-info modal-notify" role="document">
+    <div class="modal-content">
+      <div class="modal-header">        
+        <h4 class="modal-title w-100" id="myModalLabel">Subiendo Imagen</h4>
+      </div>
+      <div class="modal-body text-center">
+          <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>       
+      </div>     
+    </div>
+  </div>
+</div>

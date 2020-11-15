@@ -1,0 +1,11 @@
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let item of items">
+      <div class="text-left">
+        <h5 class="h6 indigo-text">{{item.name}}</h5>
+        <button mdbBtn type="button" color="info" outline="true" size="sm" (click)="redirect(item.id)"
+        mdbWavesEffect>editar</button>
+      <button mdbBtn type="button" color="danger" outline="true" size="sm" mdbWavesEffect>Borrar</button>
+      </div>
+
+    </li>  
+</ul>

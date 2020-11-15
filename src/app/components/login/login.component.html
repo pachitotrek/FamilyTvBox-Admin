@@ -1,0 +1,40 @@
+<div class="container-fluid caja">
+
+  <div class="d-flex flex-row justify-content-center align-items-center">
+    <div  class="formulario z-depth-5">
+
+      <div class="box">
+
+        <!-- Default form login -->
+        <form class="text-center p-5" [formGroup]="login" (ngSubmit)="Ingresar()" ngNativeValidate>
+          <img src="../../../assets/img/logo.png" alt="" width="300px">
+          <div class="mt-5">
+            <p class="h4 mb-4 text-light">Ingresar a la Plataforma</p>
+          </div>
+          <!-- Email -->
+          <input type="email" class="form-control mb-4" placeholder="E-mail" formControlName="email" name="email" required>
+          <!-- Password -->
+          <input type="password" class="form-control mb-4" placeholder="Password" formControlName="pass" name="pass" required >
+          <div class="d-flex justify-content-around">
+            <div>
+              <!-- Forgot password -->
+              <a href="" class="text-light">Olvidaste tu password?</a>
+            </div>
+          </div>
+          <div class="mt-5">
+            <!-- Sign in button -->
+            <button mdbBtn color="info" class="ovalado" size="lg" type="submit">Sign in</button>
+          </div>
+
+
+        </form>
+        <!-- Default form login -->
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
